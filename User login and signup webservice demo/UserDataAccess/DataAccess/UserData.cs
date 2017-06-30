@@ -82,6 +82,65 @@ namespace UserDataAccess.DataAccess
                 return false;
             }
         }
+      
+         protected bool UserExist(string userName)
+        {
+            usereDBContext = new UsereDBContext();
+            var count = (from c in usereDBContext.Users
+                         where c.UserName == userName
+                         select c.UserName).Count();
+
+            if (count > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        //check email inuse
+        //return true if exist
+        protected bool EmailExist(string userNameEmail)
+        {
+            usereDBContext = new UsereDBContext();
+            var count = (from c in usereDBContext.Users
+                         where c.UserEmail == userNameEmail
+                         select c.UserEmail).Count();
+
+            if (count > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        //return user id
+        protected User ReturnUser(string userName, string userPassword)
+        {
+            //ReturnVocublaryID(1);
+            // UserExist(userName);
+            if (UserExist(userName) == true)
+            {
+                user = new User();
+                usereDBContext = new UsereDBContext();
+                var result = from ur in usereDBContext.Users.ToList()
+                             where (ur.UserName == userName && ur.UserPassword == userPassword)
+                             select ur;
+                foreach (User myUser in result)
+                {
+                    user = new User();
+                    user.UserID = myUser.UserID;
+                    user.UserName = myUser.UserName;
+                    user.UserPassword = "";
+                    user.UserEmail = "";
+                    user = myUser;
+                }
+            }
+            return user;
+        }
     
 
     }
