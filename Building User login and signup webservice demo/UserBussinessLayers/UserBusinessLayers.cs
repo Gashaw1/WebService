@@ -43,9 +43,8 @@ namespace UserBussinessLayers
 
             }
             return myArrayList;
-        }
-        //********************************************************************************************************************************
-        //adding new user
+        }    
+        //add new User
         public string UserSignUp(User user)
         {
             string conferm = "";
@@ -86,6 +85,12 @@ namespace UserBussinessLayers
 
             }
             return conferm;
+        }
+
+        //return expection
+        public string myError()
+        {
+            return errorMessage;
         }
     }
 }

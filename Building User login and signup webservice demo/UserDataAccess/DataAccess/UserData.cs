@@ -13,12 +13,12 @@ namespace UserDataAccess.DataAccess
     {
         //ex
         public string errorMessage { get; set; }
-     
-        protected List<User> users { get; set; }    
+
+        protected List<User> users { get; set; }
         protected User user { get; set; }
         UsereDBContext usereDBContext { get; set; }
-          
-        //return all 
+
+        //return all default
         protected List<User> returnUsers()
         {
             try
@@ -47,10 +47,10 @@ namespace UserDataAccess.DataAccess
                     return users;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 errorMessage = ex.Message;
-              
+
                 user = new User();
                 users.Add(user);
                 return users;
@@ -82,21 +82,29 @@ namespace UserDataAccess.DataAccess
                 return false;
             }
         }
-      
-         protected bool UserExist(string userName)
+        //return tru if exits
+        protected bool UserExist(string userName)
         {
-            usereDBContext = new UsereDBContext();
-            var count = (from c in usereDBContext.Users
-                         where c.UserName == userName
-                         select c.UserName).Count();
+            try
+            {
+                usereDBContext = new UsereDBContext();
+                var count = (from c in usereDBContext.Users
+                             where c.UserName == userName
+                             select c.UserName).Count();
 
-            if (count > 0)
-            {
-                return true;
+                if (count > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return false;
+                errorMessage = ex.Message;
+                return true;
             }
         }
         //check email inuse
@@ -120,11 +128,10 @@ namespace UserDataAccess.DataAccess
         //return user id
         protected User ReturnUser(string userName, string userPassword)
         {
-            //ReturnVocublaryID(1);
-            // UserExist(userName);
+
+            user = new User();
             if (UserExist(userName) == true)
             {
-                user = new User();
                 usereDBContext = new UsereDBContext();
                 var result = from ur in usereDBContext.Users.ToList()
                              where (ur.UserName == userName && ur.UserPassword == userPassword)
@@ -141,7 +148,5 @@ namespace UserDataAccess.DataAccess
             }
             return user;
         }
-    
-
     }
 }
