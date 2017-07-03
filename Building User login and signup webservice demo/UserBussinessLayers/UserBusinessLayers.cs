@@ -21,7 +21,7 @@ namespace UserBussinessLayers
         {
             myArrayList = new ArrayList();
             userBuisnessbussines = new UserBusinessLayers();
-            myArrayList.Add(userBuisnessbussines.returnUsers().ToList());
+            myArrayList.Add(userBuisnessbussines.returnUsers());
             return myArrayList;
         }
         //user login

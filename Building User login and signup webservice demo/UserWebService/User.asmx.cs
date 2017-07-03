@@ -21,50 +21,43 @@ namespace UserWebService
     // [System.Web.Script.Services.ScriptService]
     public class User : System.Web.Services.WebService
     {
-
         JavaScriptSerializer js;
-        UserBusinessLayers bussines;  
-      
-        //[WebMethod(MessageName = "all user")]
-        //public void ReturnUser()
-        //{
-        //    bussines = new UserBusinessLayers();
-        //    JavaScriptSerializer js = new JavaScriptSerializer();
-        //    Context.Response.Write(js.Serialize(bussines.UserLogin()));
-        //}
-        [WebMethod(MessageName = "return xml")]
-        public XmlDocument ReturnUser()
+        UserBusinessLayers bussines;
+
+        [WebMethod(MessageName = "all user")]
+        public void ReturnUser()
         {
             bussines = new UserBusinessLayers();
-            var myArray = bussines.UserLogin().ToArray();
-            
-            for (int i = 0; i < myArray.Length; i ++ )
-            {
-                var x = myArray[i];
-
-            }
-            XmlDocument xDoc = new XmlDocument();
-            XmlDeclaration xDeclaratrion = xDoc.CreateXmlDeclaration("1.0", "UTF-8", null);
-            XmlNode root = xDoc.DocumentElement;
-            xDoc.InsertBefore(xDeclaratrion,root);
-
-            XmlNode UsersNode = xDoc.CreateElement("Users");
-            xDoc.AppendChild(UsersNode);
-          
-            XmlNode UserID = xDoc.CreateElement("userID");           
-            XmlAttribute userIDAttribute = xDoc.CreateAttribute("ID");
-            userIDAttribute.Value = "1";
-            UsersNode.Attributes.Append(userIDAttribute);
-
-            XmlNode UserName = xDoc.CreateElement("userID");
-            XmlAttribute userNameAttribute = xDoc.CreateAttribute("Username");
-            userNameAttribute.Value = "Akal";
-            UsersNode.Attributes.Append(userNameAttribute);
-
-            return xDoc;
-           // return  xDocument.CreateElement(bussines.UserLogin().ToString());
-           
+            JavaScriptSerializer js = new JavaScriptSerializer();
+            Context.Response.Write(js.Serialize(bussines.UserLogin()));
         }
+        //[WebMethod(MessageName = "return xml")]
+        //public XmlDocument ReturnUser()
+        //{      
+           
+           
+        //    XmlDocument xDoc = new XmlDocument();
+        //    XmlDeclaration xDeclaratrion = xDoc.CreateXmlDeclaration("1.0", "UTF-8", null);
+        //    XmlNode root = xDoc.DocumentElement;
+        //    xDoc.InsertBefore(xDeclaratrion,root);
+
+        //    XmlNode UsersNode = xDoc.CreateElement("Users");
+        //    xDoc.AppendChild(UsersNode);
+          
+        //    XmlNode UserID = xDoc.CreateElement("userID");           
+        //    XmlAttribute userIDAttribute = xDoc.CreateAttribute("ID");
+        //    userIDAttribute.Value = "1";
+        //    UsersNode.Attributes.Append(userIDAttribute);
+
+        //    XmlNode UserName = xDoc.CreateElement("userID");
+        //    XmlAttribute userNameAttribute = xDoc.CreateAttribute("Username");
+        //    userNameAttribute.Value = "Akal";
+        //    UsersNode.Attributes.Append(userNameAttribute);
+
+        //    return xDoc;
+        //   // return  xDocument.CreateElement(bussines.UserLogin().ToString());
+           
+        //}
         [WebMethod(MessageName = "return by username and password")]
         public void ReturnUser(string username, string password)
         {
