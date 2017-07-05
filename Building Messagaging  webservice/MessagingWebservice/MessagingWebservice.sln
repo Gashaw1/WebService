@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessagingWebservice.Tests", "MessagingWebservice.Tests\MessagingWebservice.Tests.csproj", "{9D4982BB-C7F7-4D7E-BF9D-B7529D43CA54}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageDataAccess", "MessageDataAccess\MessageDataAccess.csproj", "{D5DA8340-8B19-423E-B857-3A431D2814AE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageBusinessLayer", "MessageBusinessLayer\MessageBusinessLayer.csproj", "{E85FC599-F023-4C0A-BE36-CF5129251238}"
@@ -17,10 +15,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{9D4982BB-C7F7-4D7E-BF9D-B7529D43CA54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9D4982BB-C7F7-4D7E-BF9D-B7529D43CA54}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9D4982BB-C7F7-4D7E-BF9D-B7529D43CA54}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9D4982BB-C7F7-4D7E-BF9D-B7529D43CA54}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D5DA8340-8B19-423E-B857-3A431D2814AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D5DA8340-8B19-423E-B857-3A431D2814AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D5DA8340-8B19-423E-B857-3A431D2814AE}.Release|Any CPU.ActiveCfg = Release|Any CPU

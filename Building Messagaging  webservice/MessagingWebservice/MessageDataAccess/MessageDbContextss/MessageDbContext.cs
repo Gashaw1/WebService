@@ -7,8 +7,9 @@ using System.Web;
 
 namespace MessageDataAccess
 {
+   
     public class MessageDbContext : DbContext
-    {
+    {       
         public DbSet<Message> Messages { get; set; }    
     }
 }

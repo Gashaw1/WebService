@@ -4,27 +4,44 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MessageDataAccess.Models;
+using System.Collections;
+
 namespace MessageBusinessLayer
 {
-    class MussageBusiness: MessageDataAccess.MessageDataAccess
+    public class MussageBusiness : MessageDataAccess.MessageDataAccess
     {
+        string senderID { get; set; }
+        string reciverID { get; set; }
+        List<string> messageList { get; set; }
+        Queue queue { get; set; }
+
         MussageBusiness messageBusiness { get; set; }
-        public Message[] getMessage()
+        public MussageBusiness()
         {
-            messageBusiness = new MussageBusiness();
-            return messageBusiness.ReturnMessages().ToArray();
+            
         }
-        public Message[] getMessage(Message mes)
+        public MussageBusiness(string senderID)
         {
-            messageBusiness = new MussageBusiness();
-            return messageBusiness.ReturnMessages(mes.messagSenderID, mes.messageRecierID).ToArray();
+            this.senderID = senderID;
         }
-        public void sendMessage()
+        public MussageBusiness(Message mes)
+        {
+            this.senderID = mes.messagSenderID;
+            this.reciverID = mes.messageRecierID;
+        }    
+        //
+        public List<Message> getMessage(MussageBusiness mes)
         {
             messageBusiness = new MussageBusiness();
-            messageBusiness.AddMessages(message);
+            return messageBusiness.ReturnMessages(mes.senderID, mes.reciverID);          
+        }
+        public bool sendMessage(string senderId,string reciverId, string messages)
+        {
+            messageBusiness = new MussageBusiness();
+            message = new Message(senderId, reciverId,messages);
+            messageBusiness.InsertMessages(message);
 
+            return true;
         }
-
     }
 }

@@ -21,17 +21,17 @@ namespace MessageDataAccess.Models
 
         public Message()
         {
-        }
+        }     
         public Message(string messagSenderID, string messageRecierID)
         {
             this.messagSenderID = messagSenderID;
             this.messageRecierID = messageRecierID;
         }
-        public Message(string messages, string messagSenderID, string messageRecierID)
-        {
-            this.messages = messages;
+        public Message(string messagSenderID, string messageRecierID, string messages)
+        {           
             this.messagSenderID = messagSenderID;
             this.messageRecierID = messageRecierID;
+            this.messages = messages;
         }
         public void Date()
         {
