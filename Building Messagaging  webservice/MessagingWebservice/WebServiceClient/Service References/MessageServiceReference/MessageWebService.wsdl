@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="return_x0020_all_x0020_message_x0020_from_x0020_single_x0020_user">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sernderID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="reciverID" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="return_x0020_all_x0020_message_x0020_from_x0020_single_x0020_userResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="return_x0020_all_x0020_message_x0020_from_x0020_single_x0020_userResult" type="tns:ArrayOfMessage" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfMessage">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Message" nillable="true" type="tns:Message" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Message">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="messageDateTime" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="messageID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="messages" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="messagSenderID" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="messageRecierID" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="send_x0020_message_x0020_fro_x0020_single_x0020_user">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sernderID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="reciverID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="smessage" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="send_x0020_message_x0020_fro_x0020_single_x0020_userResponse">
+        <s:complexType />
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="return_x0020_all_x0020_message_x0020_from_x0020_single_x0020_userSoapIn">
+    <wsdl:part name="parameters" element="tns:return_x0020_all_x0020_message_x0020_from_x0020_single_x0020_user" />
+  </wsdl:message>
+  <wsdl:message name="return_x0020_all_x0020_message_x0020_from_x0020_single_x0020_userSoapOut">
+    <wsdl:part name="parameters" element="tns:return_x0020_all_x0020_message_x0020_from_x0020_single_x0020_userResponse" />
+  </wsdl:message>
+  <wsdl:message name="send_x0020_message_x0020_fro_x0020_single_x0020_userSoapIn">
+    <wsdl:part name="parameters" element="tns:send_x0020_message_x0020_fro_x0020_single_x0020_user" />
+  </wsdl:message>
+  <wsdl:message name="send_x0020_message_x0020_fro_x0020_single_x0020_userSoapOut">
+    <wsdl:part name="parameters" element="tns:send_x0020_message_x0020_fro_x0020_single_x0020_userResponse" />
+  </wsdl:message>
+  <wsdl:portType name="MessageWebServiceSoap">
+    <wsdl:operation name="GetMessage">
+      <wsdl:input name="return_x0020_all_x0020_message_x0020_from_x0020_single_x0020_user" message="tns:return_x0020_all_x0020_message_x0020_from_x0020_single_x0020_userSoapIn" />
+      <wsdl:output name="return_x0020_all_x0020_message_x0020_from_x0020_single_x0020_user" message="tns:return_x0020_all_x0020_message_x0020_from_x0020_single_x0020_userSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="sendMessagePerUser">
+      <wsdl:input name="send_x0020_message_x0020_fro_x0020_single_x0020_user" message="tns:send_x0020_message_x0020_fro_x0020_single_x0020_userSoapIn" />
+      <wsdl:output name="send_x0020_message_x0020_fro_x0020_single_x0020_user" message="tns:send_x0020_message_x0020_fro_x0020_single_x0020_userSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="MessageWebServiceSoap" type="tns:MessageWebServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetMessage">
+      <soap:operation soapAction="http://tempuri.org/return all message from single user" style="document" />
+      <wsdl:input name="return_x0020_all_x0020_message_x0020_from_x0020_single_x0020_user">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="return_x0020_all_x0020_message_x0020_from_x0020_single_x0020_user">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="sendMessagePerUser">
+      <soap:operation soapAction="http://tempuri.org/send message fro single user" style="document" />
+      <wsdl:input name="send_x0020_message_x0020_fro_x0020_single_x0020_user">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="send_x0020_message_x0020_fro_x0020_single_x0020_user">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="MessageWebServiceSoap12" type="tns:MessageWebServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetMessage">
+      <soap12:operation soapAction="http://tempuri.org/return all message from single user" style="document" />
+      <wsdl:input name="return_x0020_all_x0020_message_x0020_from_x0020_single_x0020_user">
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="return_x0020_all_x0020_message_x0020_from_x0020_single_x0020_user">
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="sendMessagePerUser">
+      <soap12:operation soapAction="http://tempuri.org/send message fro single user" style="document" />
+      <wsdl:input name="send_x0020_message_x0020_fro_x0020_single_x0020_user">
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="send_x0020_message_x0020_fro_x0020_single_x0020_user">
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="MessageWebService">
+    <wsdl:port name="MessageWebServiceSoap" binding="tns:MessageWebServiceSoap">
+      <soap:address location="http://localhost:62950/MessageWebService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="MessageWebServiceSoap12" binding="tns:MessageWebServiceSoap12">
+      <soap12:address location="http://localhost:62950/MessageWebService.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

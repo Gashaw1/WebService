@@ -18,14 +18,14 @@ namespace MessageDataAccess
 
         }
         //return all message
-        protected List<Message> ReturnMessages(string senderId)
+        protected List<Message> ReturnMessages(string yourId)
         {
             messagesList = new List<Message>();
             messageDbContext = new MessageDbContext();
             try
             {
                 var result = (from r in messageDbContext.Messages
-                              where r.messagSenderID == senderId
+                              where r.messagSenderID == yourId
                               select r).ToList();
 
                 if (result.Count > 0)
@@ -47,15 +47,15 @@ namespace MessageDataAccess
             }
             return messagesList;
         }
-        //return message per user
-        protected List<Message> ReturnMessages(string sendeId, string reciverId)
+        //return all message from sing user
+        protected List<Message> ReturnMessages(string yourId, string reciverId)
         {
             messagesList = new List<Message>();
             messageDbContext = new MessageDbContext();
             try
             {
                 var result = (from r in messageDbContext.Messages
-                              where r.messagSenderID == sendeId && r.messageRecierID == reciverId
+                              where r.messagSenderID == yourId && r.messageRecierID == reciverId
                               select r).ToList();
 
                 if (result.Count > 0)
@@ -77,7 +77,44 @@ namespace MessageDataAccess
             }
             return messagesList;
         }
-        //Insert message
+        //return last message from single user
+        protected Message ReturnLastMessages(string yourId, string reciverId)
+        {
+            messageDbContext = new MessageDbContext();
+            message = new Message();
+            try
+            {
+                var result = (from r in messageDbContext.Messages
+                              where r.messagSenderID == yourId && r.messageRecierID == reciverId
+                              select r).ToList();
+                if (result.Count > 0)
+                {
+                    var resutLast = (from r in result
+                                     select r).Last();
+
+                    message.messagSenderID = resutLast.messagSenderID;
+                    message.messageRecierID = resutLast.messageRecierID;
+                    message.messages = resutLast.messages;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                errMessages = ex.Message;
+            }
+            return message;
+        }
+        //return all reciverId
+        protected string[] ReturnReciverIDs()
+        {
+            messageDbContext = new MessageDbContext();
+            message = new Message();
+
+            var resultSenderID = (from r in messageDbContext.Messages
+                                  select r.messageRecierID).ToArray();
+            return resultSenderID;
+        }
+        //Insert message single reciver
         protected bool InsertMessages(Message mes)
         {
             messageDbContext = new MessageDbContext();
@@ -99,6 +136,26 @@ namespace MessageDataAccess
                 string erMessage = ex.Message;
                 return false;
             }
+        }
+        //Insert messae for all reciver
+        protected bool InsertMessagesForAllReciver(Message mes)
+        {
+            var recivers = (from r in ReturnReciverIDs()
+                            select r).ToArray();
+
+            for (int i = 0; i < recivers.Length; i++)
+            {
+                //get reciver id
+                string reciverId = recivers[i].ToString();
+
+                message = new Message();
+                message.messagSenderID = mes.messagSenderID;
+                message.messageRecierID = reciverId;
+                message.messages = mes.messages;
+                //invo method
+                InsertMessages(message);
+            }
+            return true;
         }
     }
 }

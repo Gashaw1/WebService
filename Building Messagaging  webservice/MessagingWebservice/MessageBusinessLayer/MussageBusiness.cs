@@ -10,7 +10,7 @@ namespace MessageBusinessLayer
 {
     public class MussageBusiness : MessageDataAccess.MessageDataAccess
     {
-        string senderID { get; set; }
+        string yourID { get; set; }
         string reciverID { get; set; }
         List<string> messageList { get; set; }
         Queue queue { get; set; }
@@ -18,30 +18,50 @@ namespace MessageBusinessLayer
         MussageBusiness messageBusiness { get; set; }
         public MussageBusiness()
         {
-            
+
         }
-        public MussageBusiness(string senderID)
+        public MussageBusiness(string yourID)
         {
-            this.senderID = senderID;
+            this.yourID = yourID;
         }
         public MussageBusiness(Message mes)
         {
-            this.senderID = mes.messagSenderID;
+            this.yourID = mes.messagSenderID;
             this.reciverID = mes.messageRecierID;
-        }    
+        }
         //
         public List<Message> getMessage(MussageBusiness mes)
         {
             messageBusiness = new MussageBusiness();
-            return messageBusiness.ReturnMessages(mes.senderID, mes.reciverID);          
+            return messageBusiness.ReturnMessages(mes.yourID, mes.reciverID);
         }
-        public bool sendMessage(string senderId,string reciverId, string messages)
+        //
+        public Message getLastMessage(MussageBusiness mes)
         {
             messageBusiness = new MussageBusiness();
-            message = new Message(senderId, reciverId,messages);
-            messageBusiness.InsertMessages(message);
+            return messageBusiness.ReturnLastMessages(mes.yourID, mes.reciverID);
+        }
+        public bool sendMessage(string yourID, string reciverId, string messages)
+        {
+            messageBusiness = new MussageBusiness();
+            message = new Message(yourID, reciverId, messages);
+            try
+            {
+                if (messageBusiness.InsertMessages(message) == true)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                errMessages = ex.Message;
+                return false;
+            }
 
-            return true;
         }
     }
 }

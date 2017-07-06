@@ -3,6 +3,7 @@ using MessageDataAccess.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Script.Serialization;
 using System.Web.Services;
@@ -20,25 +21,31 @@ namespace MessaageWebservice
     public class MessageWebService : System.Web.Services.WebService
     {
         MussageBusiness messageBusiess { get; set; }
-
+        List<Message> messages { get; set; }
 
 
         [WebMethod(MessageName = "return all message from single user")]
         //retrun all message from signle user
-        public void GetMessage(string sernderID, string reciverID)
+        public List<Message> GetMessage(string yourID, string reciverID)
         {
-            messageBusiess = new MussageBusiness(new Message(sernderID, reciverID));
-            JavaScriptSerializer js = new JavaScriptSerializer();
-            Context.Response.Write(js.Serialize(messageBusiess.getMessage(messageBusiess)));
-
+            messageBusiess = new MussageBusiness(new Message(yourID, reciverID));
+            return messageBusiess.getMessage(messageBusiess).ToList();
+        }
+        [WebMethod(MessageName = "return last message from single user")]
+        //retrun all message from signle user
+        public Message GetLastMessage(string yourID, string reciverID)
+        {
+            messageBusiess = new MussageBusiness(new Message(yourID, reciverID));
+            return messageBusiess.getLastMessage(messageBusiess);
         }
         [WebMethod(MessageName = "send message fro single user")]
-        public void sendMessagePerUser(string sernderID, string reciverID, string smessage)
+        public void sendMessagePerUser(string yourID, string reciverID, string smessage)
         {
             messageBusiess = new MussageBusiness();
             JavaScriptSerializer js = new JavaScriptSerializer();
-            Context.Response.Write(js.Serialize(messageBusiess.sendMessage(sernderID, reciverID, smessage)));
+            Context.Response.Write(js.Serialize(messageBusiess.sendMessage(yourID, reciverID, smessage)));
 
         }
+
     }
 }
