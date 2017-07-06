@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -24,40 +25,51 @@ namespace UserWebService
         JavaScriptSerializer js;
         UserBusinessLayers bussines;
 
-        [WebMethod(MessageName = "all user")]
-        public void ReturnUser()
+        //[WebMethod(MessageName = "all user")]
+        //public XmlDocument ReturnUser()
+        //{
+        //    bussines = new UserBusinessLayers();
+        //    XmlComment xDoucmet = new XmlComment();
+        //    //return bussines.UserLogin()XmlComment;
+        //    return xDoucmet.CreateElement(bussines.UserLogin().ToString());
+        //    //JavaScriptSerializer js = new JavaScriptSerializer();
+        //    //Context.Response.Write(js.Serialize(bussines.UserLogin()));
+        //}
+        [WebMethod(MessageName = "return xml")]
+        public XmlDocument ReturnUser()
         {
             bussines = new UserBusinessLayers();
-            JavaScriptSerializer js = new JavaScriptSerializer();
-            Context.Response.Write(js.Serialize(bussines.UserLogin()));
+            var res = from r in bussines.UserLogin()
+                      select r;
+
+            XmlDocument xDoc = new XmlDocument();
+            XmlDeclaration xDecl = xDoc.CreateXmlDeclaration("1.0", "UTF-8", null);
+
+            XmlNode root = xDoc.DocumentElement;
+            xDoc.InsertBefore(xDecl, root);
+
+            XmlNode UsersNode = xDoc.CreateElement("User");
+
+            foreach (var v in res)
+            {
+               
+                xDoc.AppendChild(UsersNode);
+
+                XmlNode UserID = xDoc.CreateElement("UserID");
+                XmlAttribute userIDAttribute = xDoc.CreateAttribute("ID");
+                userIDAttribute.Value = v.UserID.ToString();
+                UsersNode.Attributes.Append(userIDAttribute);
+
+                XmlNode UserName = xDoc.CreateElement("UserName");
+                XmlAttribute userNameAttribute = xDoc.CreateAttribute("Username");
+                userNameAttribute.Value = v.UserName;
+                UsersNode.Attributes.Append(userNameAttribute);               
+               
+            }
+            return xDoc;
+
+
         }
-        //[WebMethod(MessageName = "return xml")]
-        //public XmlDocument ReturnUser()
-        //{      
-           
-           
-        //    XmlDocument xDoc = new XmlDocument();
-        //    XmlDeclaration xDeclaratrion = xDoc.CreateXmlDeclaration("1.0", "UTF-8", null);
-        //    XmlNode root = xDoc.DocumentElement;
-        //    xDoc.InsertBefore(xDeclaratrion,root);
-
-        //    XmlNode UsersNode = xDoc.CreateElement("Users");
-        //    xDoc.AppendChild(UsersNode);
-          
-        //    XmlNode UserID = xDoc.CreateElement("userID");           
-        //    XmlAttribute userIDAttribute = xDoc.CreateAttribute("ID");
-        //    userIDAttribute.Value = "1";
-        //    UsersNode.Attributes.Append(userIDAttribute);
-
-        //    XmlNode UserName = xDoc.CreateElement("userID");
-        //    XmlAttribute userNameAttribute = xDoc.CreateAttribute("Username");
-        //    userNameAttribute.Value = "Akal";
-        //    UsersNode.Attributes.Append(userNameAttribute);
-
-        //    return xDoc;
-        //   // return  xDocument.CreateElement(bussines.UserLogin().ToString());
-           
-        //}
         [WebMethod(MessageName = "return by username and password")]
         public void ReturnUser(string username, string password)
         {
@@ -70,17 +82,17 @@ namespace UserWebService
         public void AddNewUser(String username, string userPassword, string userEmail)
         {
             bussines = new UserBusinessLayers();
-            UserDataAccess.Models.User newUser= new UserDataAccess.Models.User();
+            UserDataAccess.Models.User newUser = new UserDataAccess.Models.User();
             newUser.UserName = username;
             newUser.UserPassword = userPassword;
             newUser.UserEmail = userEmail;
             string signUpResult = bussines.UserSignUp(newUser);
-            
+
             js = new JavaScriptSerializer();
-            
+
             //check expectin
             string expectionResult = bussines.myError();
-           
+
             if (expectionResult != null)
             {
                 Context.Response.Write(js.Serialize(expectionResult));

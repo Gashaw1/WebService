@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MessageDataAccess
+namespace MessageDataAccess.MessageDataAccess
 {
     public class MessageDataAccess : Message
     {
@@ -15,9 +15,38 @@ namespace MessageDataAccess
         //def constructor
         public MessageDataAccess()
         {
-
+            
         }
         //return all message
+        protected List<Message> ReturnMessages()
+        {
+            messagesList = new List<Message>();
+            messageDbContext = new MessageDbContext();
+            try
+            {
+                var result = (from r in messageDbContext.Messages                              
+                              select r).ToList();
+
+                if (result.Count > 0)
+                {
+                    foreach (Message mes in result)
+                    {
+                        message = new Message();
+                        message.messagSenderID = mes.messagSenderID;
+                        message.messageRecierID = mes.messageRecierID;
+                        message.messages = mes.messages;
+                        message.messageDateTime = mes.messageDateTime;
+                        messagesList.Add(message);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                errMessages = ex.Message;
+            }
+            return messagesList;
+        }
+        //return all message for a single user
         protected List<Message> ReturnMessages(string yourId)
         {
             messagesList = new List<Message>();
@@ -107,11 +136,12 @@ namespace MessageDataAccess
         //return all reciverId
         protected string[] ReturnReciverIDs()
         {
+
             messageDbContext = new MessageDbContext();
             message = new Message();
 
             var resultSenderID = (from r in messageDbContext.Messages
-                                  select r.messageRecierID).ToArray();
+                                  select r.messageRecierID).Distinct().ToArray();
             return resultSenderID;
         }
         //Insert message single reciver
@@ -137,25 +167,6 @@ namespace MessageDataAccess
                 return false;
             }
         }
-        //Insert messae for all reciver
-        protected bool InsertMessagesForAllReciver(Message mes)
-        {
-            var recivers = (from r in ReturnReciverIDs()
-                            select r).ToArray();
-
-            for (int i = 0; i < recivers.Length; i++)
-            {
-                //get reciver id
-                string reciverId = recivers[i].ToString();
-
-                message = new Message();
-                message.messagSenderID = mes.messagSenderID;
-                message.messageRecierID = reciverId;
-                message.messages = mes.messages;
-                //invo method
-                InsertMessages(message);
-            }
-            return true;
-        }
+      
     }
 }

@@ -116,6 +116,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataAccess\UserData.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="UserDBContext\UsereDBContext.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

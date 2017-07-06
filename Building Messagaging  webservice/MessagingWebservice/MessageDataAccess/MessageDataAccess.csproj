@@ -118,7 +118,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MessageDataAccess\MessageDataAccess.cs" />
-    <Compile Include="MessageDbContextss\MessageDbContext.cs" />
+    <Compile Include="MessageDbContext.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Message.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

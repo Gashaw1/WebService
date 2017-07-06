@@ -21,7 +21,12 @@ namespace MessageDataAccess.Models
 
         public Message()
         {
-        }     
+        }
+        public Message(string messagSenderID)
+        {
+            this.messagSenderID = messagSenderID;
+          
+        }  
         public Message(string messagSenderID, string messageRecierID)
         {
             this.messagSenderID = messagSenderID;

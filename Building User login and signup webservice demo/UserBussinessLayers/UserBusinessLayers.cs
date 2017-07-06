@@ -16,13 +16,13 @@ namespace UserBussinessLayers
         Array array { get; set; }
         ArrayList myArrayList { get; set; }
         UserBusinessLayers userBuisnessbussines { get; set; }
-       
-        public ArrayList UserLogin()
+
+        public List<User> UserLogin()
         {
-            myArrayList = new ArrayList();
+
             userBuisnessbussines = new UserBusinessLayers();
-            myArrayList.Add(userBuisnessbussines.returnUsers());
-            return myArrayList;
+            return userBuisnessbussines.returnUsers();
+
         }
         //user login
         public ArrayList userLogin(string username, string password)
@@ -43,7 +43,7 @@ namespace UserBussinessLayers
 
             }
             return myArrayList;
-        }    
+        }
         //add new User
         public string UserSignUp(User user)
         {
