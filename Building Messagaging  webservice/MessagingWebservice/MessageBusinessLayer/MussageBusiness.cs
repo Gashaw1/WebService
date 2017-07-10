@@ -78,11 +78,20 @@ namespace MessageBusinessLayer
             {
                 messageBusiness = new MussageBusiness();
 
-                message = new Message(yourID, reciverId, messages);
-
-                if (messageBusiness.InsertMessages(message) == true)
+                //check reciver id
+                if (GetReciver(reciverId) != null)
                 {
-                    return true;
+
+                    message = new Message(yourID, reciverId, messages);
+                    //message send successed
+                    if (messageBusiness.InsertMessages(message) == true)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
                 else
                 {
