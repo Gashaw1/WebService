@@ -15,7 +15,7 @@ namespace MessageDataAccess.MessageDataAccess
         //def constructor
         public MessageDataAccess()
         {
-            
+
         }
         //return all message
         protected List<Message> ReturnMessages()
@@ -24,7 +24,7 @@ namespace MessageDataAccess.MessageDataAccess
             messageDbContext = new MessageDbContext();
             try
             {
-                var result = (from r in messageDbContext.Messages                              
+                var result = (from r in messageDbContext.Messages
                               select r).ToList();
 
                 if (result.Count > 0)
@@ -167,6 +167,33 @@ namespace MessageDataAccess.MessageDataAccess
                 return false;
             }
         }
-      
+        //check rciverIDs
+        //return true if exist
+        protected bool CheckReciverID(string reciverID)
+        {
+            try
+            {
+                messageDbContext = new MessageDbContext();
+
+                var resultReciverID = from reiverids in messageDbContext.Messages
+                                      where reiverids.messageRecierID == reciverID
+                                      select reiverids;
+
+                if (resultReciverID != null)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                errMessages = ex.Message;
+                return false;
+            }            
+        }
+
     }
 }

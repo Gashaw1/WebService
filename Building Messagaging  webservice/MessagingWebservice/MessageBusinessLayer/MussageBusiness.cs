@@ -30,6 +30,29 @@ namespace MessageBusinessLayer
             this.yourID = mes.messagSenderID;
             this.reciverID = mes.messageRecierID;
         }
+        //check reciver
+        //return null if not found
+        public string GetReciver(string reciverID)
+        {
+            messageBusiness = new MussageBusiness();
+            try
+            {
+                if (messageBusiness.CheckReciverID(reciverID) != true)
+                {
+                    return reciverID;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                errMessages = ex.Message + "Method " + "GetReciver(string reciverID)";
+                return null;
+            }
+        }
+     
         //get all message (default)
         public List<Message> getMessage()
         {
@@ -51,10 +74,12 @@ namespace MessageBusinessLayer
         //sending message for a single reciver
         public bool sendMessage(string yourID, string reciverId, string messages)
         {
-            messageBusiness = new MussageBusiness();
-            message = new Message(yourID, reciverId, messages);
             try
             {
+                messageBusiness = new MussageBusiness();
+
+                message = new Message(yourID, reciverId, messages);
+
                 if (messageBusiness.InsertMessages(message) == true)
                 {
                     return true;
@@ -93,5 +118,7 @@ namespace MessageBusinessLayer
             }
             return true;
         }
+        //public void get
     }
+
 }

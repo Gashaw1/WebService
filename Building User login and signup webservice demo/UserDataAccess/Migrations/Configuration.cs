@@ -21,7 +21,7 @@ namespace UserDataAccess.Migrations
             //
             //    context.People.AddOrUpdate(
             //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
+            //      new Person { FullName = "Akal Tadesse" },
             //      new Person { FullName = "Brice Lambson" },
             //      new Person { FullName = "Rowan Miller" }
             //    );
