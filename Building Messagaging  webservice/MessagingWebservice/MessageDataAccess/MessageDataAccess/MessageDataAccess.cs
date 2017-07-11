@@ -194,7 +194,5 @@ namespace MessageDataAccess.MessageDataAccess
                 return false;
             }            
         }
-
-
     }
 }
