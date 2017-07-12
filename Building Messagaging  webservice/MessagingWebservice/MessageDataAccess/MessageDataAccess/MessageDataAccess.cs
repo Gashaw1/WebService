@@ -17,6 +17,7 @@ namespace MessageDataAccess.MessageDataAccess
         {
 
         }
+       
         //return all message
         protected List<Message> ReturnMessages()
         {
@@ -167,32 +168,32 @@ namespace MessageDataAccess.MessageDataAccess
                 return false;
             }
         }
-        //check rciverIDs
-        //return true if exist
-        protected bool CheckReciverID(string reciverID)
-        {
-            try
-            {
-                messageDbContext = new MessageDbContext();
+        ////check rciverIDs
+        ////return true if exist
+        //protected bool CheckReciverID(string reciverID)
+        //{
+        //    try
+        //    {
+        //        messageDbContext = new MessageDbContext();
 
-                var resultReciverID = from reiverids in messageDbContext.Messages
-                                      where reiverids.messageRecierID == reciverID
-                                      select reiverids;
+        //        var resultReciverID = (from reiverids in messageDbContext.Messages
+        //                               where reiverids.messageRecierID == reciverID
+        //                               select reiverids.messageRecierID).Distinct();
 
-                if (resultReciverID != null)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            catch (Exception ex)
-            {
-                errMessages = ex.Message;
-                return false;
-            }            
-        }
+        //        if (resultReciverID.Any())
+        //        {
+        //            return true;
+        //        }
+        //        else
+        //        {
+        //            return false;
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        errMessages = ex.Message;
+        //        return false;
+        //    }
+        //}
     }
 }

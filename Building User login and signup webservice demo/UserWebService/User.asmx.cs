@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Script.Serialization;
 using System.Web.Services;
 using System.Xml;
+using System.Xml.Linq;
 using UserBussinessLayers;
 
 namespace UserWebService
@@ -25,6 +26,8 @@ namespace UserWebService
         JavaScriptSerializer js;
         UserBusinessLayers bussines;
 
+        //XDocument xDecumentss;
+
         //[WebMethod(MessageName = "all user")]
         //public XmlDocument ReturnUser()
         //{
@@ -42,32 +45,26 @@ namespace UserWebService
             var res = from r in bussines.UserLogin()
                       select r;
 
-            XmlDocument xDoc = new XmlDocument();
-            XmlDeclaration xDecl = xDoc.CreateXmlDeclaration("1.0", "UTF-8", null);
+            XmlDocument x = new XmlDocument();
+            XmlDeclaration xDeclaration = new XmlDeclaration();
+            XmlElement xelement = new XmlElement();
+            xelement.
 
-            XmlNode root = xDoc.DocumentElement;
-            xDoc.InsertBefore(xDecl, root);
+           
+           
+            //foreach (var v in res)
+            //{
 
-            XmlNode UsersNode = xDoc.CreateElement("User");
-
-            foreach (var v in res)
-            {
-               
-                xDoc.AppendChild(UsersNode);
-
-                XmlNode UserID = xDoc.CreateElement("UserID");
-                XmlAttribute userIDAttribute = xDoc.CreateAttribute("ID");
-                userIDAttribute.Value = v.UserID.ToString();
-                UsersNode.Attributes.Append(userIDAttribute);
-
-                XmlNode UserName = xDoc.CreateElement("UserName");
-                XmlAttribute userNameAttribute = xDoc.CreateAttribute("Username");
-                userNameAttribute.Value = v.UserName;
-                UsersNode.Attributes.Append(userNameAttribute);               
-               
-            }
-            return xDoc;
-
+            //    XDocument xDecumentss = new XDocument(new XDeclaration("1.0", "utf-8", "yes"),
+            //   new XComment("xml userDocument"),
+            //   new XElement("Users",
+            //       new XElement("User", new XAttribute("UserID", v.UserID),
+            //           new XElement("Username", v.UserName),
+            //           new XElement("UserEmail", v.UserEmail)
+            //   )));
+            //    x = xDecumentss;
+            //}
+            return x;
 
         }
         [WebMethod(MessageName = "return by username and password")]

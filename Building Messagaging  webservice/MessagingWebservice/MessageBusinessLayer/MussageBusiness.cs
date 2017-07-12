@@ -30,29 +30,7 @@ namespace MessageBusinessLayer
             this.yourID = mes.messagSenderID;
             this.reciverID = mes.messageRecierID;
         }
-        //check reciver
-        //return null if not found
-        public string GetReciver(string reciverID)
-        {
-            messageBusiness = new MussageBusiness();
-            try
-            {
-                if (messageBusiness.CheckReciverID(reciverID) != true)
-                {
-                    return reciverID;
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            catch (Exception ex)
-            {
-                errMessages = ex.Message + "Method " + "GetReciver(string reciverID)";
-                return null;
-            }
-        }
-     
+
         //get all message (default)
         public List<Message> getMessage()
         {
@@ -78,20 +56,12 @@ namespace MessageBusinessLayer
             {
                 messageBusiness = new MussageBusiness();
 
-                //check reciver id
-                if (GetReciver(reciverId) != null)
-                {
 
-                    message = new Message(yourID, reciverId, messages);
-                    //message send successed
-                    if (messageBusiness.InsertMessages(message) == true)
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
+                message = new Message(yourID, reciverId, messages);
+                //message send successed
+                if (messageBusiness.InsertMessages(message) == true)
+                {
+                    return true;
                 }
                 else
                 {
@@ -109,23 +79,32 @@ namespace MessageBusinessLayer
         //Insert messae for all reciver
         public bool sendMessage(string yourID, string mes)
         {
-            //get all reciverids
-            var recivers = (from r in ReturnReciverIDs()
-                            select r).ToArray();
-
-            for (int i = 0; i < recivers.Length; i++)
+            try
             {
-                //get reciver id
-                string reciverId = recivers[i].ToString();
+                //get all reciverids
+                var recivers = (from r in ReturnReciverIDs()
+                                select r).ToArray();
 
-                message = new Message();
-                message.messagSenderID = yourID;
-                message.messageRecierID = reciverId;
-                message.messages = mes;
-                //invo method
-                InsertMessages(message);
+                for (int i = 0; i < recivers.Length; i++)
+                {
+                    //get reciver id
+                    string reciverId = recivers[i].ToString();
+
+                    message = new Message();
+                    message.messagSenderID = yourID;
+                    message.messageRecierID = reciverId;
+                    message.messages = mes;
+                    //invo method
+                    InsertMessages(message);
+                }
+                return true;
             }
-            return true;
+            catch (Exception ex)
+            {
+                errMessages = ex.Message + "<br/> sendMessage(string yourID, string mes)";
+                return false;
+            }
+
         }
         //public void get
     }

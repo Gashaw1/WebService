@@ -119,11 +119,19 @@
   <ItemGroup>
     <Compile Include="MessageDataAccess\MessageDataAccess.cs" />
     <Compile Include="MessageDbContext.cs" />
+    <Compile Include="Migrations\201707120016279_Message.cs" />
+    <Compile Include="Migrations\201707120016279_Message.Designer.cs">
+      <DependentUpon>201707120016279_Message.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Message.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201707120016279_Message.resx">
+      <DependentUpon>201707120016279_Message.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

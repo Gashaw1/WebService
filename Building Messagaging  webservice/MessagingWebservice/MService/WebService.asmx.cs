@@ -7,17 +7,18 @@ using System.Web;
 using System.Web.Script.Serialization;
 using System.Web.Services;
 
-namespace MessaageWebservice
+
+namespace MService
 {
     /// <summary>
-    /// Summary description for MessageWebservices
+    /// Summary description for WebService
     /// </summary>
     [WebService(Namespace = "http://tempuri.org/")]
     [WebServiceBinding(ConformsTo = WsiProfiles.None)]
     [System.ComponentModel.ToolboxItem(false)]
     // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line. 
     // [System.Web.Script.Services.ScriptService]
-    public class MessageWebservices : System.Web.Services.WebService
+    public class WebService : System.Web.Services.WebService
     {
 
         MussageBusiness messageBusiess { get; set; }
