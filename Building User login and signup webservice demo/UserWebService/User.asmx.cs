@@ -74,7 +74,6 @@ namespace UserWebService
             js = new JavaScriptSerializer();
             Context.Response.Write(js.Serialize(bussines.userLogin(username, password).ToArray()));
         }
-
         [WebMethod(MessageName = "add new User")]
         public void AddNewUser(String username, string userPassword, string userEmail)
         {
