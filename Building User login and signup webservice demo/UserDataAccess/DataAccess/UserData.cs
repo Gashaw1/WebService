@@ -112,16 +112,24 @@ namespace UserDataAccess.DataAccess
         protected bool EmailExist(string userNameEmail)
         {
             usereDBContext = new UsereDBContext();
-            var count = (from c in usereDBContext.Users
-                         where c.UserEmail == userNameEmail
-                         select c.UserEmail).Count();
+            try
+            {
+                var count = (from c in usereDBContext.Users
+                             where c.UserEmail == userNameEmail
+                             select c.UserEmail).Count();
 
-            if (count > 0)
-            {
-                return true;
+                if (count > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
-            else
+            catch (Exception ex)
             {
+                errorMessage = ex.Message;
                 return false;
             }
         }
@@ -130,21 +138,28 @@ namespace UserDataAccess.DataAccess
         {
 
             user = new User();
-            if (UserExist(userName) == true)
+            try
             {
-                usereDBContext = new UsereDBContext();
-                var result = from ur in usereDBContext.Users.ToList()
-                             where (ur.UserName == userName && ur.UserPassword == userPassword)
-                             select ur;
-                foreach (User myUser in result)
+                if (UserExist(userName) == true)
                 {
-                    user = new User();
-                    user.UserID = myUser.UserID;
-                    user.UserName = myUser.UserName;
-                    user.UserPassword = "";
-                    user.UserEmail = "";
-                    user = myUser;
+                    usereDBContext = new UsereDBContext();
+                    var result = from ur in usereDBContext.Users.ToList()
+                                 where (ur.UserName == userName && ur.UserPassword == userPassword)
+                                 select ur;
+                    foreach (User myUser in result)
+                    {
+                        user = new User();
+                        user.UserID = myUser.UserID;
+                        user.UserName = myUser.UserName;
+                        user.UserPassword = "";
+                        user.UserEmail = "";
+                        user = myUser;
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                errorMessage = ex.Message;
             }
             return user;
         }

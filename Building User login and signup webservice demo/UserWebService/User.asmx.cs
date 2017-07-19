@@ -37,36 +37,36 @@ namespace UserWebService
         //    return xDoucmet.CreateElement(bussines.UserLogin().ToString());
         //    //JavaScriptSerializer js = new JavaScriptSerializer();
         //    //Context.Response.Write(js.Serialize(bussines.UserLogin()));
+        ////}
+        //[WebMethod(MessageName = "return xml")]
+        //public XmlDocument ReturnUser()
+        //{
+        //    bussines = new UserBusinessLayers();
+        //    var res = from r in bussines.UserLogin()
+        //              select r;
+
+        //    XmlDocument x = new XmlDocument();
+        //    XmlDeclaration xDeclaration = new XmlDeclaration();
+        //    XmlElement xelement = new XmlElement();
+        //    xelement.
+
+           
+           
+        //    //foreach (var v in res)
+        //    //{
+
+        //    //    XDocument xDecumentss = new XDocument(new XDeclaration("1.0", "utf-8", "yes"),
+        //    //   new XComment("xml userDocument"),
+        //    //   new XElement("Users",
+        //    //       new XElement("User", new XAttribute("UserID", v.UserID),
+        //    //           new XElement("Username", v.UserName),
+        //    //           new XElement("UserEmail", v.UserEmail)
+        //    //   )));
+        //    //    x = xDecumentss;
+        //    //}
+        //    return x;
+
         //}
-        [WebMethod(MessageName = "return xml")]
-        public XmlDocument ReturnUser()
-        {
-            bussines = new UserBusinessLayers();
-            var res = from r in bussines.UserLogin()
-                      select r;
-
-            XmlDocument x = new XmlDocument();
-            XmlDeclaration xDeclaration = new XmlDeclaration();
-            XmlElement xelement = new XmlElement();
-            xelement.
-
-           
-           
-            //foreach (var v in res)
-            //{
-
-            //    XDocument xDecumentss = new XDocument(new XDeclaration("1.0", "utf-8", "yes"),
-            //   new XComment("xml userDocument"),
-            //   new XElement("Users",
-            //       new XElement("User", new XAttribute("UserID", v.UserID),
-            //           new XElement("Username", v.UserName),
-            //           new XElement("UserEmail", v.UserEmail)
-            //   )));
-            //    x = xDecumentss;
-            //}
-            return x;
-
-        }
         [WebMethod(MessageName = "return by username and password")]
         public void ReturnUser(string username, string password)
         {

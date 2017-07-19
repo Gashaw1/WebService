@@ -117,7 +117,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MessageDataAccess\MessageDataAccess.cs" />
+    <Compile Include="MessageDataAccess\DataAccess.cs" />
     <Compile Include="MessageDbContext.cs" />
     <Compile Include="Migrations\201707120016279_Message.cs" />
     <Compile Include="Migrations\201707120016279_Message.Designer.cs">
